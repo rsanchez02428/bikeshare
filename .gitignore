@@ -172,3 +172,6 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+chicago.csv
+new_york_city.csv
+washington.csv
