@@ -32,6 +32,16 @@ This project:
 
 ## Files used
 
-- chicago.csv
-- new_york_city.csv
-- washington.csv
+- Chicago Bikeshare Data
+- New York City Bikeshare Data
+- Washington Bikeshare Data
+
+## Requirements
+
+- Python 3.6 or higher
+    This project was built and tested with Python 3.8+, but any modern Python 3 version should work.
+
+- Required Python Libraries:
+    - pandas 
+    - numpy
+    - time (built-in)
