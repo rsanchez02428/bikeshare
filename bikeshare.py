@@ -36,7 +36,11 @@ def get_filters():
     return city, month, day
 
 def load_data(city, month, day):
-    df = pd.read_csv(CITY_DATA[city])
+    try:
+        df = pd.read_csv(CITY_DATA[city])
+    except FileNotFoundError:
+        print(f"\nError: The data file for {city.title()} was not found.")
+        return pd.DataFrame()
 
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['month'] = df['Start Time'].dt.month_name().str.lower()
@@ -50,6 +54,11 @@ def load_data(city, month, day):
         df = df[df['day_of_week'] == day]
 
     return df
+
+def main():
+    while True:
+        city, month, day = get_filters()
+        df = load_data(city, month, day)
 
 def time_stats(df):
     print('\nCalculating The Most Frequent Times of Travel...\n')
@@ -123,6 +132,19 @@ def user_stats(df):
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
+
+def summary_report(df):
+    print("\nSummary Report:")
+    print("Total trips: {len(df)}")
+    print(f"Average Trip Duration: {df['Trip Duration'].mean():.2f} seconds")
+
+    if 'User Type' in df.columns:
+        print("\nUser Types:")
+        print(df['User Type'].value_counts().to_string())
+
+    if 'Gender' in df.columns:
+        print("\nGender Breakdown:")
+        print(df['Gender'].value_counts().to_string())
 
 def display_raw_data(df):
     index = 0
