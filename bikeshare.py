@@ -36,7 +36,11 @@ def get_filters():
     return city, month, day
 
 def load_data(city, month, day):
-    df = pd.read_csv(CITY_DATA[city])
+    try:
+        df = pd.read_csv(CITY_DATA[city])
+    except FileNotFoundError:
+        print(f"\nError: The data file for {city.title()} was not found.")
+        return pd.DataFrame()
 
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['month'] = df['Start Time'].dt.month_name().str.lower()
@@ -50,6 +54,11 @@ def load_data(city, month, day):
         df = df[df['day_of_week'] == day]
 
     return df
+
+def main():
+    while True:
+        city, month, day = get_filters()
+        df = load_data(city, month, day)
 
 def time_stats(df):
     print('\nCalculating The Most Frequent Times of Travel...\n')
