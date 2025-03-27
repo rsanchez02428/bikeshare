@@ -133,6 +133,19 @@ def user_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+def summary_report(df):
+    print("\nSummary Report:")
+    print("Total trips: {len(df)}")
+    print(f"Average Trip Duration: {df['Trip Duration'].mean():.2f} seconds")
+
+    if 'User Type' in df.columns:
+        print("\nUser Types:")
+        print(df['User Type'].value_counts().to_string())
+
+    if 'Gender' in df.columns:
+        print("\nGender Breakdown:")
+        print(df['Gender'].value_counts().to_string())
+
 def display_raw_data(df):
     index = 0
     show_data = input('/nWould you like to see 5 lines of raw data? Enter yes or no.\n').lower()
